@@ -1,7 +1,9 @@
 # TheRiddlerSolution-CircularTrain
 This is my solution to 538's Circular train puzzle published on August 2, 2019
 
-#Puzzle Text:
+Link: https://fivethirtyeight.com/features/how-many-cars-are-on-this-circular-train/
+
+# Puzzle Text:
 Riddler Classic
 From Ben Tupper, ‘round and ‘round the railroad:
 
@@ -12,3 +14,57 @@ From the car you’re in, you can walk to a car on either side — and because t
 What is the most efficient method for figuring out how many cars are in the train?
 
 (Assume that you can’t mark or otherwise deface a train car, and that each car’s light is only visible from within that car. The doors automatically close behind you, too. There are only two actions you can take: turning on or off a light and walking between cars.)
+
+# Solution
+
+Walk around the train, every time you find a light that matches the starting light, change it and return to start while keeping track of the number of cars you went through to get there.
+- If the starting car's light has changed when you get back then you know you were just in the starting car and
+  can return the number of cars in the train.
+- If the starting car's light is unchanged then repeat the process.
+
+Time Complexity:
+- Worst Case: All of the lights on the train are the same. For each new car you see you have to
+            backtrack all the way to the start for:
+            
+      __ i           
+      \            2i 
+      /__ num cars     
+
+
+
+- Average Case: We already know lights which are different than the start can't be the start and so there is no reason to backtrack in this case. On average 1/2 of the new lights seen will be different and not require backtracking for a better a total moves of:
+
+        __ i                
+       \            3i  /  2
+       /__ num cars         
+
+
+- Best Case: First light different than every other light. In this case you can make one complete loop. Find the
+           first light and immediately backtrack for a total of:
+          
+          2(num cars)   
+           
+           
+## Improvements to the strategy: 
+If we go in opposite directions from the direction we start in every time we return to start we can save moves by switching the closest same color lights to start first. Otherwise we run into the issue where we're backtracking the entire train just to turn off the light directly next to the starting car.
+  
+The new better time complexities are now:
+
+- Worst Case: Since on average we will finish the first half of the loop from the left, and the other half from the right the new time complexity will be:
+
+      (  __ i             )
+      (  \            2i  ) * 2
+      (  /__ num cars / 2 )
+    
+- Average Case: Same as in the worst case. We can add up how long it takes to do half the loop for both sides.
+
+
+
+      (  __ i               )
+      (  \            3i/2  ) * 2
+      (  /__ num cars / 2   )
+    
+- Best Case: Best case will be the same as before since it consists of only the one loop there and one loop back.
+
+To test and show both strategies I coded both strategies under all conditions in Python. Attached is a graph showing the results:
+
