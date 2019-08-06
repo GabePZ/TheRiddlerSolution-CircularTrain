@@ -68,3 +68,5 @@ The new better time complexities are now:
 
 To test and show both strategies I coded both strategies under all conditions in Python. Attached is a graph showing the results:
 
+![](simulation_results.png?raw=true)
+
