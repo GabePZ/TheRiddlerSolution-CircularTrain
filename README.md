@@ -46,7 +46,7 @@ Time Complexity:
            
            
 ## Improvements to the strategy: 
-If we go in opposite directions from the direction we start in every time we return to start we can save moves by switching the closest same color lights to start first. Otherwise we run into the issue where we're backtracking the entire train just to turn off the light directly next to the starting car.
+After returning to start we can do the same strategy but instead in the opposite direction. This saves time because it splits the problem in half, where we are solving the left side of the train and the right side of the train seperately and then adding up the result. This avoids the having to backtrack the entire train for cars which are close to the starting car in the opposite direction significantly improving the efficiency of the search.
   
 The new better time complexities are now:
 
@@ -66,7 +66,7 @@ The new better time complexities are now:
     
 - Best Case: Best case will be the same as before since it consists of only the one loop there and one loop back.
 
-To test and show both strategies I coded both strategies under all conditions in Python. Attached is a graph showing the results:
+To test and show both strategies I coded both strategies under all cases in Python.
 
 ![](simulation_result.png?raw=true)
 
